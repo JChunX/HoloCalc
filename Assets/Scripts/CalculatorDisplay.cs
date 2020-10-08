@@ -18,6 +18,7 @@ public class CalculatorDisplay : MonoBehaviour
 
     private string _curOperand;
     private string _prevInput;
+    private string _sgn;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,7 @@ public class CalculatorDisplay : MonoBehaviour
         _TextField.SetText("0");
         _curOperand = "0";
         _prevInput = "start";
+        _sgn = "+";
     }
 
     // Update is called once per frame
@@ -60,6 +62,7 @@ public class CalculatorDisplay : MonoBehaviour
                     _curOperand = _curOperand + input;
                 }
 
+                _sgn = "+";
                 _TextField.SetText(_curOperand);
 
                 if (input == "0")
@@ -122,7 +125,22 @@ public class CalculatorDisplay : MonoBehaviour
                     _prevInput = input;
                 }
                 break;
-            case "+/-": // not implemented
+            case "+/-": 
+                if (_curOperand != "0")
+                {
+                    Debug.Log("+/-");
+                    if (_sgn == "+")
+                    {
+                        _curOperand = "-" + _curOperand;
+                        _sgn = "-";
+                    }
+                    else if (_curOperand.Contains("-"))
+                    {
+                        _curOperand = _curOperand.Remove(0, 1);
+                        _sgn = "+";
+                    }
+                    _TextField.SetText(_curOperand);
+                }
                 break;
             case "c":
                 if (_prevInput == "num")
